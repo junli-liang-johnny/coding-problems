@@ -7,7 +7,29 @@
  */
 public class OneAway {
 	public static void main(String[] args) {
+		OneAway oneAway = new OneAway();
 
+		// Test cases
+		String[][] testCases = {
+				{ "pale", "ple", "true" }, // remove
+				{ "pales", "pale", "true" }, // insert
+				{ "pale", "bale", "true" }, // replace
+				{ "pale", "bake", "false" }, // more than one edit
+				{ "pale", "pale", "false" } // no change
+		};
+
+		// Run test cases
+		for (String[] testCase : testCases) {
+			String str1 = testCase[0];
+			String str2 = testCase[1];
+			boolean expected = Boolean.parseBoolean(testCase[2]);
+			boolean result = oneAway.test(str1, str2);
+
+			System.out.println("Test case: " + str1 + ", " + str2);
+			System.out.println("Expected: " + expected + ", Result: " + result);
+			System.out.println(result == expected ? "PASS" : "FAIL");
+			System.out.println();
+		}
 	}
 
 	/**
@@ -16,19 +38,19 @@ public class OneAway {
 	 * replace same length
 	 */
 	public boolean test(String str1, String str2) {
-		if (str1.length() == str2.length() + 1) { // insert ?
-			return isInsertion(str1, str2);
-		} else if (str1.length() == str2.length() - 1) { // remove
-			return isRemoval(str1, str2);
+		if (str1.length() < str2.length()) { // edit ?
+			return isEditInsert(str1, str2);
+		} else if (str1.length() > str2.length()) {
+			return isEditInsert(str2, str1);
 		} else { // replace ?
 			return isReplacement(str1, str2);
 		}
 	}
 
-	boolean isInsertion(String str1, String str2) {
+	boolean isEditInsert(String str1, String str2) {
 		int i = 0, j = 0;
 
-		while (i < str1.length() && j < str2.length()) {
+		while (j < str2.length() && i < str1.length()) {
 			if (str1.charAt(i) != str2.charAt(j)) {
 				if (i != j) {
 					return false;
@@ -44,10 +66,9 @@ public class OneAway {
 		return true;
 	}
 
-	boolean isRemoval(String str1, String str2) {
-
-	}
-
+	/**
+	 * assume str1.lengths() == str2.length()
+	 */
 	boolean isReplacement(String str1, String str2) {
 		int edits = 0;
 		int i = 0;
