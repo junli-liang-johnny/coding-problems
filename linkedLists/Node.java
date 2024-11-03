@@ -8,6 +8,10 @@ public class Node {
 		this.data = d;
 	}
 
+	public Node() {
+		this.data = 0;
+	}
+
 	void appendToTail(int d) {
 		Node end = new Node(d);
 		Node n = this;

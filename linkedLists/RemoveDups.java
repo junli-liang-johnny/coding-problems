@@ -5,9 +5,6 @@
  */
 package linkedLists;
 
-import linkedLists.Node;
-import java.util.LinkedList;
-import java.util.Arrays;
 import java.util.HashSet;
 
 public class RemoveDups {
