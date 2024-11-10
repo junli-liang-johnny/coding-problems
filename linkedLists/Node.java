@@ -45,4 +45,17 @@ public class Node {
 		}
 		return current1 == null && current2 == null;
 	}
+
+	public int length() {
+		int len = 0;
+
+		Node n = this;
+
+		while (n != null) {
+			len++;
+			n = n.next;
+		}
+
+		return len;
+	}
 }
