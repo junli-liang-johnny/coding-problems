@@ -1,9 +1,21 @@
-from itertools import permutations
 import time
 import random
 
+"""
+An array nums of length n is beautiful if:
+- nums is a permutation of the tegers in the range [1, n]
+- For every 0 <= 1 < j < n, there is no index k with i < k < j where 2 * nums[k] == nums[i] + nums[j]
+
+Example 1:
+Input: n = 4
+Output: [2, 1, 4, 3]
+
+Input: n = 5
+Output: [3, 1, 2, 5, 4]
+"""
+
 class Solution:
-	def beautifulArray(self, n: int) -> list[int]:
+	def beautiful_array(self, n: int) -> list[int]:
 		res = [1]
 
 		while len(res) < n:
@@ -38,7 +50,7 @@ class Solution:
 		print("Testing beautiful_array implementation")
 		start = time.time()
 		for n in range(1, max_n + 1):
-				arr = beautiful_array(n)
+				arr = self.beautiful_array(n)
 				valid, msg = self.is_beautiful(arr)
 				if not valid:
 						print(f"[FAIL] n={n}: {msg}")
@@ -49,7 +61,7 @@ class Solution:
 		# Some random larger tests
 		for _ in range(random_tests):
 				n = random.randint(max_n + 1, max_random_n)
-				arr = beautiful_array(n)
+				arr = self.beautiful_array(n)
 				valid, msg = self.is_beautiful(arr)
 				if not valid:
 						print(f"[FAIL] n={n}: {msg}")
@@ -58,3 +70,8 @@ class Solution:
 		elapsed = time.time() - start
 		print(f"Passed {random_tests} random tests (n up to {max_random_n}). Time: {elapsed:.3f}s")
 		return True
+
+if __name__ == "__main__":
+	solution = Solution()
+
+	solution.run_test()
