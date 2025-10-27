@@ -47,6 +47,9 @@ The array already contains distinct elements. Therefore, the answer is 0.
 """
 
 class Solution:
+	def my_solution(self, nums: list[int]) -> int:
+		pass
+
 	def minimumOperations(self, nums: list[int]) -> int:
 		count = 0
 		map = {}
@@ -55,15 +58,26 @@ class Solution:
 		while True:
 			for num in nums:
 				map[num] = map.get(num, 0)+1
-				if map[num] == 2:
+				if map[num] >= 2:
 					temp += 1
 		
 			if temp == 0:
 				break
-			nums = nums[min(3, len(nums))]
+			nums = nums[min(3, len(nums)):]
 			count += 1
+			print(nums)
 
 		return count
+
+	def sol2(self, nums: list[int]) -> int:
+		seen = [False] * len(nums)
+
+		for i in range(len(nums)-1, -1, -1):
+			if seen[nums[i]]:
+				return i // 3 + 1
+			seen[nums[i]] = True
+
+		return 0
 
 	def check_unique(self, start, nums: list[int]):
 		seen = set()
@@ -73,6 +87,7 @@ class Solution:
 			seen.add(num)
 		return True
 
+	# without need to recreate nums each iteration
 	def sol(self, nums: list[int]) -> int:
 		count = 0
 		for i in range(0, len(nums), 3):
@@ -83,4 +98,4 @@ class Solution:
 
 if __name__ == "__main__":
 	solution = Solution()
-	print(solution.sol([1, 2, 3, 4, 2, 3, 3 ,5, 7]))
+	print(solution.sol2([1, 2, 3, 4, 2, 3, 3 ,5, 7]))
