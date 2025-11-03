@@ -23,9 +23,31 @@ Explanation: Both "apply" and "apple" can be built from other words in the dicti
 
 Constraints:
 
-    1 <= words.length <= 1000
-    1 <= words[i].length <= 30
-    words[i] consists of lowercase English letters.
+		1 <= words.length <= 1000
+		1 <= words[i].length <= 30
+		words[i] consists of lowercase English letters.
 
 
 """
+
+class Solution:
+	def sol(self, words: list[str]) -> str:
+		chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+		ans = ""
+		wordset = set(words)
+		for word in words:
+			if len(word) > len(ans) or len(word) == len(ans) and word < ans:
+				if all(word[:k] in wordset for k in range(1, len(word))):
+					ans = word
+
+		word = 'apply'
+		for k in range(1, len(word)):
+			print(f"word[:k]: {word[:k]}, in wordset?: {word[:k] in wordset}")
+		
+		return ans
+
+if __name__ == "__main__":
+	words = ["a","banana","app","appl","ap","apply","apple"]
+	sol = Solution()
+	print(sol.sol(["a","banana","app","appl","ap","apply","apple"]))
+	# print(set(words))
