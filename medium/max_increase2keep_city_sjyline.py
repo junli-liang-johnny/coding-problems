@@ -28,8 +28,17 @@ Explanation: Increasing the height of any building will result in the skyline ch
 
 class Sol:
 	def sol(self, grid: list[list[int]]) -> int:
-		pass
+		row_num = len(grid)
+		col_num = len(grid[0])
+		total = 0
+		max_row = [max(grid[r]) for r in range(row_num)]
+		max_col = [max(grid[r][c] for r in range(row_num)) for c in range(col_num)]
 
+		for r in range(row_num):
+			for c in range(col_num):
+				max_height = min(max_row[r], max_col[c])
+				total += max_height - grid[r][c]
+		return total
 
 if __name__ == "__main__":
 	sol = Sol()
