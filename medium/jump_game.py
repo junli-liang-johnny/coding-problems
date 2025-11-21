@@ -21,7 +21,16 @@ Explanation: You will always arrive at index 3 no matter what. Its maximum jump 
 
 class Sol:
 	def sol(self, nums: list[int]) -> bool:
-		pass
+		max_reach = 0
+
+		for i in range(len(nums)):
+			if i > max_reach:
+				return False
+
+			max_reach = max(max_reach, i+nums[i])
+			if max_reach >= len(nums) -1:
+				return True
+		return True
 
 if __name__ == "__main__":
 	sol = Sol()
