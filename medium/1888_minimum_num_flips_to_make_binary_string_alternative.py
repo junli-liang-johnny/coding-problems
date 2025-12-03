@@ -53,12 +53,59 @@ Explanation: Use the second operation on the second element to make s = "1010".
 │     min(diff1, diff2) across all windows               │
 │                                                         │
 └─────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────┐
+│                                                              │
+│   WHY DECREMENT WHEN s[i-n] != alt1[i-n]?                    │
+│                                                              │
+│   Because:                                                   │
+│                                                              │
+│   1. diff1 counts mismatches ONLY inside current window      │
+│                                                              │
+│   2. When a character LEAVES the window:                     │
+│      - If it WAS a mismatch → we counted it before           │
+│      - Now it's outside → we must REMOVE that count          │
+│      - So we DECREMENT diff1                                 │
+│                                                              │
+│   3. If leaving char was NOT a mismatch:                     │
+│      - We never counted it                                   │
+│      - Nothing to remove                                     │
+│      - diff1 stays the same                                  │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
 """
 
 class Sol:
 	def sol(self, s: str) -> int:
-		pass
+		n = len(s)
+		s = s + s
+		alt1 = ""
+		alt2 = ""
+		diff1 = 0
+		diff2 = 0
+		result = float("inf")
+
+		for i in range(len(s)):
+			alt1 += "0" if i % 2 == 0 else "1"
+			alt2 += "1" if i % 2 == 0 else "0"
+
+		for i in range(len(s)):
+			if s[i] != alt1[i]:
+				diff1 += 1
+			if s[i] != alt2[i]:
+				diff2 += 2
+
+			if i >= n:
+				if s[i-n] != alt1[i-n]:
+					diff1 -= 1
+				if s[i-n] != alt2[i-n]:
+					diff2 != 1
+
+			if i >= n - 1:
+				result = min(result, diff1, diff2)
+		
+		return result
 
 if __name__ == "__main__":
 	sol = Sol()
-	print(sol.sol("111000"))
+	print(sol.sol("010"))
